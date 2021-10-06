@@ -351,3 +351,5 @@ MigrationBackup/
 
 #vcxproj
 *.vcxproj
+EvolutionaryAlgorithms.vcxproj
+EvolutionaryAlgorithms.vcxproj.filters
