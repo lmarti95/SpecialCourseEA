@@ -1,16 +1,22 @@
 #include "EvolutionaryAlgorithms.h"
 
+#include "CostFunctions.h"
+
 #include <algorithm>
 #include <chrono>
+#include <cmath>
 #include <iostream>
 #include <random>
+
+long nextPosition = -1;
+std::random_device dev;
+std::mt19937 rng(dev());
+double l;
 
 int* CreateRandomBitString(int N)
 {
 	int* bitString = new int[N];
 
-	std::random_device dev;
-	std::mt19937 rng(dev());
 	std::uniform_int_distribution<std::mt19937::result_type> coin(0, 1);
 
 	for(int i = 0; i < N; ++i)
@@ -21,19 +27,44 @@ int* CreateRandomBitString(int N)
 	return bitString;
 }
 
-int* CreateRandomBitStringFromParents(int N, std::vector<std::pair<int*, int>> aParents)
+int* CreateRandomBitStringFromParents(int N, std::vector<std::pair<int*, int>> aParents, int* aFitnessValue)
 {
 	int* bitString = new int[N];
 
-	std::random_device dev;
-	std::mt19937 rng(dev());
 	std::uniform_int_distribution<std::mt19937::result_type> selectParent(0, aParents.size()-1);
 
 	auto selection = selectParent(rng);
 
 	std::copy(aParents.at(selection).first, aParents.at(selection).first + N, bitString);
 
+	*aFitnessValue = aParents.at(selection).second;
+
 	return bitString;
+}
+
+int FlipBits(const int N, int* aBitString, int aNext)
+{
+	int fitnessValueChange = 0;
+	long start = 0;
+
+	while(aNext != -1)
+	{
+		auto temp = start + aNext;
+		if(aBitString[start + aNext] == 0)
+		{
+			aBitString[start + aNext] = 1;
+			fitnessValueChange++;
+		}
+		else
+		{
+			aBitString[start + aNext] = 0;
+			fitnessValueChange--;
+		}
+		start = start + aNext + 1;
+		aNext = GetNextPosition(N - start - 1);
+	}
+
+	return fitnessValueChange;
 }
 
 std::pair<long, double> OnePlusOneEA(int N, CostFunction aCostFunction)
@@ -42,17 +73,17 @@ std::pair<long, double> OnePlusOneEA(int N, CostFunction aCostFunction)
 
 	int* bitStringPrime = new int[N];
 
-	std::random_device dev;
-	std::mt19937 rng(dev());
 	std::uniform_int_distribution<std::mt19937::result_type> p(1, N);
 
 	int fitnessValue = aCostFunction(bitString, N);
-	int newFitnessValue = 0;
+	int newFitnessValue;
 
 	long iterations = 0;
 	bool justUpdated = false;
 
 	auto start = std::chrono::steady_clock::now();
+
+	l = log(1.0 - 1.0 / N);
 
 	while(fitnessValue != N)
 	{
@@ -61,29 +92,27 @@ std::pair<long, double> OnePlusOneEA(int N, CostFunction aCostFunction)
 		if(!justUpdated)
 		{
 			std::copy(bitString, bitString + N, bitStringPrime);
+			newFitnessValue = fitnessValue;
 		}
 		else
 		{
 			justUpdated = false;
 		}
-		
 
-		for(int i = 0; i < N; ++i)
+		long next = GetNextPosition(N - 1);
+		if(next != -1)
 		{
-			if(p(rng) == N)
-			{
-				if(bitStringPrime[i] == 0)
-				{
-					bitStringPrime[i] = 1;
-				}
-				else
-				{
-					bitStringPrime[i] = 0;
-				}
-			}
+			newFitnessValue += FlipBits(N, bitStringPrime, next);
+		}
+		else
+		{
+			continue;
 		}
 
-		newFitnessValue = aCostFunction(bitStringPrime, N);
+		if(aCostFunction != OneMax)
+		{
+			newFitnessValue = aCostFunction(bitStringPrime, N);
+		}
 		
 		if(newFitnessValue > fitnessValue)
 		{
@@ -105,7 +134,7 @@ std::pair<long, double> OnePlusOneEA(int N, CostFunction aCostFunction)
 	return std::make_pair(iterations, elapsedSeconds.count());
 }
 
-std::pair<long, double> MuPlusOneEA(int N, CostFunction aCostFunction, int aMuSize)
+std::pair<long, double> MuPlusOneEA(const int N, CostFunction aCostFunction, int aMuSize)
 {
 	std::vector<std::pair<int*, int>> population;
 
@@ -116,8 +145,6 @@ std::pair<long, double> MuPlusOneEA(int N, CostFunction aCostFunction, int aMuSi
 		population.push_back(std::make_pair(bitString, fitnessValue));
 	}
 
-	std::random_device dev;
-	std::mt19937 rng(dev());
 	std::uniform_int_distribution<std::mt19937::result_type> p(1, N);
 
 	int* bitStringPrime;
@@ -140,24 +167,21 @@ std::pair<long, double> MuPlusOneEA(int N, CostFunction aCostFunction, int aMuSi
 			justUpdated = false;
 		}
 
-		bitStringPrime = CreateRandomBitStringFromParents(N, population);
-
-		for(int i = 0; i < N; ++i)
+		long next = GetNextPosition(N-1);
+		if(next != -1)
 		{
-			if(p(rng) == N)
-			{
-				if(bitStringPrime[i] == 0)
-				{
-					bitStringPrime[i] = 1;
-				}
-				else
-				{
-					bitStringPrime[i] = 0;
-				}
-			}
+			bitStringPrime = CreateRandomBitStringFromParents(N, population, &newFitnessValue);
+			newFitnessValue += FlipBits(N, bitStringPrime, next);
+		}
+		else
+		{
+			continue;
 		}
 
-		newFitnessValue = aCostFunction(bitStringPrime, N);
+		if(aCostFunction != OneMax)
+		{
+			newFitnessValue = aCostFunction(bitStringPrime, N);
+		}
 
 		auto min = std::min_element(population.begin(), population.end(), [](auto a, auto b)
 			{
@@ -195,4 +219,31 @@ std::pair<long, double> MuPlusOneEA(int N, CostFunction aCostFunction, int aMuSi
 std::pair<long, double> OnePlusOneEAWrapper(int N, CostFunction aCostFunction, int temp)
 {
 	return OnePlusOneEA(N, aCostFunction);
+}
+
+long SavePosition(long N)
+{
+	if(nextPosition > N)
+	{
+		nextPosition = nextPosition - N-1;
+		return -1;
+	}
+	else
+	{
+		long next = nextPosition;
+		nextPosition = -1;
+		return next;
+	}
+}
+
+long GetNextPosition(long N)
+{
+	std::uniform_real_distribution<> p(0.0, 1.0);
+	if(nextPosition == -1)
+	{
+		auto x = p(rng);
+		nextPosition = (long)floor(log(x) / l);
+	}
+
+	return SavePosition(N);
 }
