@@ -4,37 +4,25 @@
 #include <fstream>
 #include <iostream>
 
-std::vector<double> RunEA(CostFunction aCostFunction, EAFunction aEAFunction, std::vector<int> aLengths, std::vector<int> aMus)
+double Benchmark::RunEA(EvolutionaryAlgorithm* aEA)
 {
-	std::vector<double> averageIterations;
+	long long iterations = 0;
+	long long time = 0;
 
-	for(auto& length : aLengths)
-	{		
-		for(auto& Mu : aMus)
-		{
-			long long iterations = 0;
-			double  time = 0;
-			for(int i = 0; i < repeat; ++i)
-			{
-				auto result = aEAFunction(length, aCostFunction, Mu);
-				iterations += result.first;
-				time += result.second;
-			}
-
-			double averageIteration = iterations / repeat;
-			double averageTime = time / repeat;
-
-			std::cout << "Average iterations for EA with Mu size "<< Mu <<" is " << averageIteration <<
-				" average time is " << averageTime << " seconds and N is " << length << "." << std::endl;
-
-			averageIterations.push_back(averageIteration);
-		}
+	for(int i = 0; i < mRepeat; ++i)
+	{
+		auto result = aEA->RunEA();
+		iterations += result.first;
+		time += result.second;
 	}
 
-	return averageIterations;
+	double averageIteration = iterations / mRepeat;
+	double averageTime = time / mRepeat;
+
+	return averageIteration;	
 }
 
-void savePlot(std::vector<int> aX, std::vector<double> aY, std::string aXLabel, std::string aYLabel, std::string aTitle)
+void Benchmark::savePlot(std::vector<int> aX, std::vector<double> aY, std::string aXLabel, std::string aYLabel, std::string aTitle)
 {
 	if(!std::filesystem::is_directory("Output") || !std::filesystem::exists("Output"))
 	{
@@ -83,7 +71,7 @@ void savePlot(std::vector<int> aX, std::vector<double> aY, std::string aXLabel, 
 	std::cout << aTitle << ".txt was created" << std::endl;
 }
 
-void savePlotMu(std::vector<int> aLengths, std::vector<double> aIterations, std::string aTitle, std::vector<int> aMus)
+void Benchmark::savePlotMu(std::vector<int> aLengths, std::vector<double> aIterations, std::string aTitle, std::vector<int> aMus)
 {
 	if(!std::filesystem::is_directory("Output") || !std::filesystem::exists("Output")) 
 	{

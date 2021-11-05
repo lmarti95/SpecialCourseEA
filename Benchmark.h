@@ -1,15 +1,17 @@
 #pragma once
 
-#include "EvolutionaryAlgorithms.h"
+#include "EvolutionaryAlgorithm.h"
 
-const int repeat = 30;
+class Benchmark {
+public:
+	int GetRepeat() { return mRepeat; }
+	void SetRepeat(int aRepeat) { mRepeat = aRepeat; }
 
-typedef std::pair<long, double>(*EAFunction)(int, CostFunction, int);
+	double RunEA( EvolutionaryAlgorithm* aEA);
 
-std::string EAFunctionNameLookUp(EAFunction aEAFunction);
+	void savePlot(std::vector<int> aX, std::vector<double> aY, std::string aXLabel, std::string aYLabel, std::string aTitle);
 
-std::vector<double> RunEA(CostFunction aCostFunction, EAFunction aEAFunction, std::vector<int> aLengths, std::vector<int> aMus);
-
-void savePlot(std::vector<int> aX, std::vector<double> aY, std::string aXLabel, std::string aYLabel, std::string aTitle);
-
-void savePlotMu(std::vector<int> aX, std::vector<double> aY, std::string aTitle, std::vector<int> aMus);
+	void savePlotMu(std::vector<int> aX, std::vector<double> aY, std::string aTitle, std::vector<int> aMus);
+private:
+	int mRepeat = 30;
+};
