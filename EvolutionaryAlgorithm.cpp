@@ -65,3 +65,26 @@ long EvolutionaryAlgorithm::GetNextPosition(long aPos)
 
 	return SavePosition(aPos);
 }
+
+std::pair<int*, double> EvolutionaryAlgorithm::SelectBestDeleteRest(std::vector<std::pair<int*, double>>* aMutations)
+{
+	int position = std::distance(aMutations->begin(), std::max_element(aMutations->begin(), aMutations->end(), [](auto a, auto b)
+	{
+		return a.second < b.second;
+	}));
+
+	int* bitString = aMutations->at(position).first;
+	double fitnessValue = aMutations->at(position).second;
+
+	for(unsigned int i = 0; i < aMutations->size(); ++i)
+	{
+		if(i != position)
+		{
+			delete[] aMutations->at(i).first;
+		}
+	}
+
+	delete aMutations;
+
+	return std::make_pair(bitString, fitnessValue);
+}

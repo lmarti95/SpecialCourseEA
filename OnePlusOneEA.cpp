@@ -47,7 +47,7 @@ std::pair<long long, double> OnePlusOneEA::NoOptimizationOneOne()
 	double fitnessValue = mCostFunction->GetFitnessValue(mBitString);
 	double newFitnessValue = 0;
 
-	long iterations = 0;
+	long long iterations = 0;
 	bool justUpdated = false;
 
 	int* bitStringPrime = new int[mN];
@@ -107,7 +107,7 @@ std::pair<long long, double> OnePlusOneEA::FitnessEvaluationOptimizationOneOne()
 	double fitnessValue = mCostFunction->GetFitnessValue(mBitString);
 	double newFitnessValue = 0;
 
-	long iterations = 0;
+	long long iterations = 0;
 	bool justUpdated = false;
 
 	int* bitStringPrime = new int[mN];
@@ -173,7 +173,7 @@ std::pair<long long, double> OnePlusOneEA::RandomNumberGenerationOptimizationOne
 	double fitnessValue = mCostFunction->GetFitnessValue(mBitString);
 	double newFitnessValue = 0;
 
-	long iterations = 0;
+	long long iterations = 0;
 	bool justUpdated = false;
 
 	int* bitStringPrime = new int[mN];
@@ -228,7 +228,7 @@ std::pair<long long, double> OnePlusOneEA::AllOptimizationOneOne()
 	double fitnessValue = mCostFunction->GetFitnessValue(mBitString);
 	double newFitnessValue = 0;
 
-	long iterations = 0;
+	long long iterations = 0;
 	bool justUpdated = false;
 
 	int* bitStringPrime = new int[mN];
@@ -280,4 +280,3 @@ std::pair<long long, double> OnePlusOneEA::AllOptimizationOneOne()
 
 	return std::make_pair(iterations, elapsedSeconds.count());
 }
-

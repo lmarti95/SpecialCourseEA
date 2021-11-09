@@ -8,8 +8,6 @@
 MuPlusOneEA::MuPlusOneEA(int aN, CostFunction* aCostFunction, int aPopulation) : EvolutionaryAlgorithm(aN, aCostFunction)
 {
 	mPopulationSize = aPopulation;
-
-	CreateInitialPopulation();
 }
 
 MuPlusOneEA::~MuPlusOneEA()
@@ -31,7 +29,6 @@ void MuPlusOneEA::CreateInitialPopulation()
 		double fitnessValue = mCostFunction->GetFitnessValue(bitString);
 		mPopulation.push_back(std::make_pair(bitString, fitnessValue));
 	}
-
 }
 
 void MuPlusOneEA::DeletePopulation()
@@ -59,10 +56,12 @@ std::pair<int*, double> MuPlusOneEA::CreateRandomBitStringFromParents()
 
 std::pair<long long, double> MuPlusOneEA::RunEA()
 {
+	CreateInitialPopulation();
+
 	int* bitStringPrime;
 
 	double newFitnessValue = 0;
-	long iterations = 0;
+	long long iterations = 0;
 	bool justUpdated = false;
 
 	double maximumFitnessValue = mCostFunction->GetMaximumFitnessValue();
@@ -106,17 +105,16 @@ std::pair<long long, double> MuPlusOneEA::RunEA()
 
 		if(newFitnessValue > min->second)
 		{
-			int* bitString = new int[mN];
-			std::copy(bitStringPrime, bitStringPrime + mN, bitString);
-
 			delete[] min->first;
 			mPopulation.erase(min);
-			mPopulation.push_back(std::make_pair(bitString, newFitnessValue));
+			mPopulation.push_back(std::make_pair(bitStringPrime, newFitnessValue));
 
 			justUpdated = true;
 		}
-
-		delete[] bitStringPrime;
+		else
+		{
+			delete[] bitStringPrime;
+		}
 	}
 
 	auto end = std::chrono::steady_clock::now();

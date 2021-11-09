@@ -16,12 +16,17 @@ public:
 	void SetCostFunction(CostFunction* aCostFunction) { mCostFunction = aCostFunction; }
 
 	virtual std::pair<long long, double> RunEA() = 0;
+	virtual std::string GetEAName() = 0;
+	std::string GetCostFunctionName() { return mCostFunction->GetCostFunctionName(); }
+
+protected:
 
 	double FlipBits(int* aBitString, int aNext);
 	long SavePosition(long aPos);
 	long GetNextPosition(long aPos);
 
-protected:
+	std::pair<int*, double> SelectBestDeleteRest(std::vector<std::pair<int*, double>>* aMutations);
+
 	int mN;
 
 	long mNextPosition = -1;

@@ -7,7 +7,7 @@
 double Benchmark::RunEA(EvolutionaryAlgorithm* aEA)
 {
 	long long iterations = 0;
-	long long time = 0;
+	double time = 0;
 
 	for(int i = 0; i < mRepeat; ++i)
 	{
@@ -17,12 +17,14 @@ double Benchmark::RunEA(EvolutionaryAlgorithm* aEA)
 	}
 
 	double averageIteration = iterations / mRepeat;
-	double averageTime = time / mRepeat;
+	double averageTime = time / (double)mRepeat;
+
+	std::cout << averageIteration << " average iterations in " << averageTime << "s on average with " << aEA->GetEAName() << " on " << aEA->GetCostFunctionName() << ", ran it " << std::to_string(mRepeat) << " times" << std::endl;
 
 	return averageIteration;	
 }
 
-void Benchmark::savePlot(std::vector<int> aX, std::vector<double> aY, std::string aXLabel, std::string aYLabel, std::string aTitle)
+void Benchmark::SavePlot(std::vector<int> aX, std::vector<double> aY, std::string aXLabel, std::string aYLabel, std::string aTitle)
 {
 	if(!std::filesystem::is_directory("Output") || !std::filesystem::exists("Output"))
 	{
@@ -71,7 +73,7 @@ void Benchmark::savePlot(std::vector<int> aX, std::vector<double> aY, std::strin
 	std::cout << aTitle << ".txt was created" << std::endl;
 }
 
-void Benchmark::savePlotMu(std::vector<int> aLengths, std::vector<double> aIterations, std::string aTitle, std::vector<int> aMus)
+void Benchmark::SavePlotMu(std::vector<int> aLengths, std::vector<double> aIterations, std::string aTitle, std::vector<int> aMus)
 {
 	if(!std::filesystem::is_directory("Output") || !std::filesystem::exists("Output")) 
 	{

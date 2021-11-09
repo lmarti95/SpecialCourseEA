@@ -11,15 +11,13 @@ public:
 	OnePlusOneEA(int aN, CostFunction* aCostFunction);
 	~OnePlusOneEA();
 
-	OnePlusOneEA(const OnePlusOneEA&) = delete;
-	OnePlusOneEA& operator= (const OnePlusOneEA&) = delete;
-
 	void SetOptimizationLevel(OnePlusOneEAOptimization aOpt) { mOptimizationLevel = aOpt; }
 	OnePlusOneEAOptimization GetOptimizationLevel() { return mOptimizationLevel; }
 
 	void RandomizeBitString();
 
 	std::pair<long long, double> RunEA() override;
+	std::string GetEAName() override { return "(1 + 1) EA";}
 
 	std::pair<long long, double> NoOptimizationOneOne();
 	std::pair<long long, double> FitnessEvaluationOptimizationOneOne();

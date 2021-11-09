@@ -9,9 +9,9 @@ public:
 
 	double RunEA( EvolutionaryAlgorithm* aEA);
 
-	void savePlot(std::vector<int> aX, std::vector<double> aY, std::string aXLabel, std::string aYLabel, std::string aTitle);
+	void SavePlot(std::vector<int> aX, std::vector<double> aY, std::string aXLabel, std::string aYLabel, std::string aTitle);
 
-	void savePlotMu(std::vector<int> aX, std::vector<double> aY, std::string aTitle, std::vector<int> aMus);
+	void SavePlotMu(std::vector<int> aX, std::vector<double> aY, std::string aTitle, std::vector<int> aMus);
 private:
 	int mRepeat = 30;
 };
