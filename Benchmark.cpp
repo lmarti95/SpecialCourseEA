@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iostream>
 
-double Benchmark::RunEA(EvolutionaryAlgorithm* aEA)
+std::pair<double, double> Benchmark::RunEA(EvolutionaryAlgorithm* aEA)
 {
 	long long iterations = 0;
 	double time = 0;
@@ -19,9 +19,9 @@ double Benchmark::RunEA(EvolutionaryAlgorithm* aEA)
 	double averageIteration = iterations / mRepeat;
 	double averageTime = time / (double)mRepeat;
 
-	std::cout << averageIteration << " average iterations in " << averageTime << "s on average with " << aEA->GetEAName() << " on " << aEA->GetCostFunctionName() << ", ran it " << std::to_string(mRepeat) << " times" << std::endl;
+	std::cout << averageIteration << " average iterations in " << averageTime << "s on average with " << aEA->GetEAName() << " on " << aEA->GetCostFunctionName() << ", ran it " << std::to_string(mRepeat) << " times on N: " << aEA->GetN() << std::endl;
 
-	return averageIteration;	
+	return std::make_pair(averageIteration, averageTime);	
 }
 
 void Benchmark::SavePlot(std::vector<int> aX, std::vector<double> aY, std::string aXLabel, std::string aYLabel, std::string aTitle)

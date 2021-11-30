@@ -4,16 +4,15 @@ GeneticAlgorithm::GeneticAlgorithm(int N, CostFunction* aCostFunction) : Evoluti
 {
 }
 
-int* GeneticAlgorithm::CreateMutatedOffSpring(std::vector<std::pair<int*, double>> aParents)
+int* GeneticAlgorithm::CreateMutatedOffSpringUniformCrossover(std::vector<std::pair<int*, double>> aParents)
 {
 	int* bitString = new int[mN];
 
-	for(unsigned int i = 0; i < aParents.size(); ++i)
+	std::uniform_int_distribution<std::mt19937::result_type> parentsRandom(0, aParents.size()-1);
+
+	for(unsigned int i = 0; i <mN; ++i)
 	{
-		for(size_t j = i / aParents.size() * mN; j < (static_cast<unsigned long long>(i) + 1) / aParents.size() * mN; ++j)
-		{
-			bitString[j] = aParents.at(i).first[j];
-		}
+		bitString[i] = aParents.at(parentsRandom(mRng)).first[i];
 	}
 
 	return bitString;

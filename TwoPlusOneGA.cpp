@@ -69,7 +69,7 @@ std::pair<long long, double> TwoPlusOneGA::RunEA()
 		long next = GetNextPosition(mN - 1);
 		if(next != -1)
 		{
-			bitStringPrime = CreateMutatedOffSpring(mParents);
+			bitStringPrime = CreateMutatedOffSpringUniformCrossover(mParents);
 			FlipBits(bitStringPrime, next);
 		}
 		else
@@ -80,9 +80,9 @@ std::pair<long long, double> TwoPlusOneGA::RunEA()
 		newFitnessValue = mCostFunction->GetFitnessValue(bitStringPrime);
 
 		auto min = std::min_element(mParents.begin(), mParents.end(), [](auto a, auto b)
-			{
-				return a.second < b.second;
-			});
+		{
+			return a.second < b.second;
+		});
 
 		if(newFitnessValue > min->second)
 		{

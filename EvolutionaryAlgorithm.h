@@ -19,6 +19,8 @@ public:
 	virtual std::string GetEAName() = 0;
 	std::string GetCostFunctionName() { return mCostFunction->GetCostFunctionName(); }
 
+	int GetN() { return mN; }
+
 protected:
 
 	double FlipBits(int* aBitString, int aNext);

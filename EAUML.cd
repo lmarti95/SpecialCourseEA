@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EvolutionaryAlgorithm" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAgAAIIEAAAgAACAoAAAAAAEACCwAgAwQCIAAAA=</HashCode>
+      <FileName>EvolutionaryAlgorithm.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GeneticAlgorithm" Collapsed="true">
+    <Position X="1.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAIAAAAAAAAAAAAAAAAEAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>GeneticAlgorithm.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MuPlusOneEA" Collapsed="true">
+    <Position X="5.5" Y="2" Width="1.5" />
+    <InheritanceLine Type="EvolutionaryAlgorithm" FixedToPoint="true">
+      <Path>
+        <Point X="5.25" Y="1.062" />
+        <Point X="5.25" Y="1.625" />
+        <Point X="6.25" Y="1.625" />
+        <Point X="6.25" Y="2" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAQAIAAAAAAIACAAAAAAAFAAABCAAAAAAAAAA=</HashCode>
+      <FileName>MuPlusOneEA.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OneCommaLambdaEA" Collapsed="true">
+    <Position X="7.5" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAIAAAAIACAACAARAAAEAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>OneCommaLambdaEA.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OnePlusLambdaCommaLambdaGA" Collapsed="true">
+    <Position X="3.5" Y="4" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAQIAAAAIAAACDAAQAAAEAAIEAQIAIBAAAAA=</HashCode>
+      <FileName>OnePlusLambdaCommaLambdaGA.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OnePlusOneEA" Collapsed="true">
+    <Position X="3.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAIBAEAAAAAAAAAQAAAFAAkEACAAAAAAAAA=</HashCode>
+      <FileName>OnePlusOneEA.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TwoPlusOneGA" Collapsed="true">
+    <Position X="1.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACIAAAAACAAAAAIAAAAkAAAAAACAAAAAAAA=</HashCode>
+      <FileName>TwoPlusOneGA.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

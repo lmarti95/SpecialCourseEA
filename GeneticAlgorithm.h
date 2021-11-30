@@ -10,6 +10,6 @@ public:
 	virtual std::pair<long long, double> RunEA() = 0;
 	virtual std::string GetEAName() = 0;
 protected:
-	int* CreateMutatedOffSpring(std::vector<std::pair<int*, double>> aParents);
+	int* CreateMutatedOffSpringUniformCrossover(std::vector<std::pair<int*, double>> aParents);
 };
 
