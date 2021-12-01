@@ -26,13 +26,13 @@ std::pair<double, double> Benchmark::RunEA(EvolutionaryAlgorithm* aEA)
 
 void Benchmark::SavePlot(std::vector<int> aX, std::vector<double> aY, std::string aXLabel, std::string aYLabel, std::string aTitle)
 {
-	if(!std::filesystem::is_directory("Output") || !std::filesystem::exists("Output"))
+	/*if(!std::filesystem::is_directory("Output") || !std::filesystem::exists("Output"))
 	{
 		std::filesystem::create_directory("Output");
-	}
+	}*/
 
 	std::ofstream file;
-	file.open("output/" + aTitle + ".txt");
+	file.open("Output/" + aTitle + ".txt");
 
 	file << aXLabel << " = [";
 
@@ -66,74 +66,6 @@ void Benchmark::SavePlot(std::vector<int> aX, std::vector<double> aY, std::strin
 
 	file << "plt.xlabel('" << aXLabel << "')" << std::endl;
 	file << "plt.ylabel('" << aYLabel << "')" << std::endl;
-	file << "plt.title('" << aTitle << "')" << std::endl;
-
-	file.close();
-
-	std::cout << aTitle << ".txt was created" << std::endl;
-}
-
-void Benchmark::SavePlotMu(std::vector<int> aLengths, std::vector<double> aIterations, std::string aTitle, std::vector<int> aMus)
-{
-	if(!std::filesystem::is_directory("Output") || !std::filesystem::exists("Output")) 
-	{
-		std::filesystem::create_directory("Output"); 
-	}
-
-	std::ofstream file;
-
-	file.open("Output/" + aTitle + ".txt");
-
-	file << "N" << " = [";
-
-	for(auto& x : aLengths)
-	{
-		if(&x == &aLengths.back())
-		{
-			file << x << "]" << std::endl;
-		}
-		else
-		{
-			file << x << ", ";
-		}
-	}
-
-	for(int i = 0; i < aMus.size(); i++)
-	{
-		file << "Mu_" << aMus.at(i) << " = [";
-
-		for(int j = 0; j < aLengths.size(); j++)
-		{
-			if(j == aLengths.size()-1)
-			{
-				file << aIterations.at(j * aMus.size() + i) << "]" << std::endl << std::endl;
-			}
-			else
-			{
-				file << aIterations.at(j * aMus.size() + i) << ", ";
-			}
-		}
-
-		file << "plt.plot(" << "N" << "," << "Mu_" << aMus.at(i) << ")" << std::endl;
-	}
-
-	file << "plt.xlabel('" << "N" << "')" << std::endl;
-	file << "plt.ylabel('" << "Iterations" << "')" << std::endl;
-
-	file << "plt.legend([";
-
-	for(auto& mu : aMus)
-	{
-		if(&mu == &aMus.back())
-		{
-			file << "'Mu: " << mu << "'])" << std::endl;
-		}
-		else
-		{
-			file << "'Mu: " << mu << "',";
-		}
-	}
-	
 	file << "plt.title('" << aTitle << "')" << std::endl;
 
 	file.close();

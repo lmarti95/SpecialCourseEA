@@ -39,6 +39,8 @@ std::pair<long long, double> OnePlusOneEA::RunEA()
 			return RandomNumberGenerationOptimizationOneOne();
 		case OnePlusOneEAOptimization::All:
 			return AllOptimizationOneOne();
+		default:
+			return AllOptimizationOneOne();
 	}
 }
 

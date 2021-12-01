@@ -9,7 +9,7 @@ public:
 
 	double GetMaximumFitnessValue() override;
 	double GetFitnessValue(int* aBitString) override;
-	std::string GetCostFunctionName() override { return "Jump\(" +std::to_string(mGapSize) + "\)" ; }
+	std::string GetCostFunctionName() override { return "Jump(" +std::to_string(mGapSize) + ")" ; }
 private:
 	int mGapSize;
 };

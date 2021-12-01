@@ -142,8 +142,7 @@ std::pair<long long, double> OnePlusLambdaCommaLambdaGA::RunEA()
 	RandomizeBitString();
 
 	mFitnessValue = mCostFunction->GetFitnessValue(mBitString);
-
-	double newFitnessValue = 0;
+	
 	long long iterations = 0;
 	bool justUpdated = false;
 

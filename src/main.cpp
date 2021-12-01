@@ -20,5 +20,4 @@ int main()
 	Benchmark b;
 
 	b.RunEA(&opo);
-
 }

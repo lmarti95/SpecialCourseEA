@@ -1,5 +1,6 @@
 #include "MuPlusOneEA.h"
 
+#include <algorithm>
 #include "CostFunction.h"
 #include "OneMax.h"
 

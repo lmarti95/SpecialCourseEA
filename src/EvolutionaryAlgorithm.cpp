@@ -1,5 +1,7 @@
 #include "EvolutionaryAlgorithm.h"
 
+#include<algorithm>
+
 EvolutionaryAlgorithm::EvolutionaryAlgorithm(int aN, CostFunction* aCostFunction)
 {
 	mN = aN;
@@ -21,7 +23,6 @@ double EvolutionaryAlgorithm::FlipBits(int* aBitString, int aNext)
 
 	while(aNext != -1)
 	{
-		auto temp = start + aNext;
 		if(aBitString[start + aNext] == 0)
 		{
 			aBitString[start + aNext] = 1;
