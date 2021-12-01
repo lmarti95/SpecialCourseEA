@@ -12,10 +12,6 @@ OnePlusLambdaCommaLambdaGA::OnePlusLambdaCommaLambdaGA(int N, CostFunction* aCos
 	mBitString = new int[mN];
 
 	mLambda = aLambda;
-	if(mN/2 < mLambda)
-	{
-		mLambda = mN / 2;
-	}
 	mP = (double)mLambda / (double)mN;
 	mC = 1 / (double)mLambda;
 
