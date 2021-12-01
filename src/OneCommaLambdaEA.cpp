@@ -7,11 +7,6 @@
 OneCommaLambdaEA::OneCommaLambdaEA(int N, CostFunction* aCostFunction,int aLambda) : EvolutionaryAlgorithm(N, aCostFunction)
 {
 	mLambda = aLambda;
-	if(mN / 2 < mLambda)
-	{
-		mLambda = mN / 2;
-	}
-
 	mBitString = new int[mN];
 }
 
